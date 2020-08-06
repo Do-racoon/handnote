@@ -250,68 +250,42 @@
         let element = document.getElementById("menu");
         element.style.display = "block";
     }
-    
-    // Close the dropdown if the user clicks outside of it
-    /*window.onclick = function(event) {
-        if (!event.target.matches('.dropbtn')) {
-            let element = document.getElementById("menu");
+
+    // text 입력 창 이외 부분을 클릭했을 때 메뉴 없어지게 
+    window.onclick = function(event) {
+        if(!event.target.matches('#text')){
             element.style.display = "none";
-
-            var dropdowns = document.getElementsByClassName("dropdown-content");
-            var i;
-            for (i = 0; i < dropdowns.length; i++) {
-                var openDropdown = dropdowns[i];
-                if (openDropdown.classList.contains('show')) {
-                    openDropdown.classList.remove('show');
-                }
-            }
         }
-    }*/
-
-    function selectText() {
-        var selectionText = "";
-        if (document.getSelection) {
-            selectionText = document.getSelection();
-        } else if (document.selection) {
-            selectionText = document.selection.createRange().text;
-        }
-        return selectionText;
     }
    
+    // 드래그 마지막에 메뉴 나오게 하기
     var d = document.getElementById("text")
-    
     d.onmouseup = function(e){
-        //document.getElementById("text").innerHTML = selectText();
         if (document.getSelection){
+            
             let element = document.getElementById("menu");
             element.style.display = "block";
             element.style.position = "absolute";
-            //const absoluteTop = window.pageYOffset + element.getBoundingClientRect().top;
-            var divEl = $("#text");
-            var divX = divEl.offset().left;
-            var divY = divEl.offset().top;
 
-            var a = e.pageX;
-            var b = e.pageY;
-            console.log(a+" "+b);  
-            var c = document.getElementById("myDropdown");
-            c.style.left = a+"px";
-            c.style.top = b+"px";
-            c.style.display = "block";
-            c.style.position = "absolute";
-            
-            c.style.position = "absolute !important"
-            //console.log(divX+" "+divY);
-            //$("#text").mouseup(function(e) {
-                //var a = e.pageX;
-                //var b = e.pageY;
-                //console.log(a+" "+b);  
-                //var c = document.getElementById("myDropdown")
-                //c.style.display = "block";
-                //c.style.left = e.pageX;
-                //c.style.top = e.pageY;
-                //c.style.position = "absolute !important"
-            //})
+            // 마지막 드래그 위치 가져오기
+            let el = document.getElementById("myDropdown");
+
+            if(!e.target.matches('#text')){
+                alert("efe");
+                el.style.display = "none";    
+            }
+            // 메뉴 나오게 하기
+            if(document.getSelection().toString() == ''){
+                el.style.display = "none";
+            } else{
+                let left = e.pageX;
+                let top = e.pageY;
+    
+                el.style.left = left + "px";
+                el.style.top = top + "px";
+                el.style.display = "block";
+                el.style.position = "absolute";
+            }
         }
     }
 </script>
