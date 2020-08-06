@@ -1,0 +1,335 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+           user-select: auto; 
+        }
+    </style>
+    <script type="text/javascript">
+        function selectText() {
+            var selectionText = "";
+            if (document.getSelection) {
+                selectionText = document.getSelection();
+            } else if (document.selection) {
+                selectionText = document.selection.createRange().text;
+            }
+            return selectionText;
+        }
+       
+        document.onmouseup = function() {
+            document.getElementById("console").innerHTML = selectText();
+        }
+        document.styleSheets()
+    </script>
+</head>
+<body>
+    <p><div>test message</div></p>
+    <div id="console"></div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>글자 편집기</title>
+<style type="text/css">
+    #menu{
+        width: 100px;
+        height: 150px;
+    }
+  #text {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 1px solid gray;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    overflow: auto;
+    padding: 2px;
+    resize: both;
+  }
+  button {
+    -moz-box-shadow: 0px 1px 0px 0px #fff6af;
+    -webkit-box-shadow: 0px 1px 0px 0px #fff6af;
+    box-shadow: 0px 1px 0px 0px #fff6af;
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffec64), color-stop(1, #ffab23));
+    background:-moz-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:-webkit-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:-o-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:-ms-linear-gradient(top, #ffec64 5%, #ffab23 100%);
+    background:linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec64', endColorstr='#ffab23',GradientType=0);
+    background-color:#ffec64;
+    -moz-border-radius:15px;
+    -webkit-border-radius:15px;
+    border-radius:10px;
+    border:1px solid #ffaa22;
+    display:inline-block;
+    cursor:pointer;
+    color:#333333;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:5px 10px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #ffee66;
+  }
+  .dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+#menu{
+    display: none;
+}
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+
+</style>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+<body>
+  <div style="background-color:#CCFFFF; width:390px; padding: 10px;">
+    <button id="selectAll">전체선택</button>
+    <button id="bold">굵게</button>
+    <button id="italic">기울임</button>
+    <button id="underLine">밑줄</button>
+    <br/>
+    <button id="justifyLeft">왼쪽정렬</button>
+    <button id="justifyCenter">가운데정렬</button>
+    <button id="justifyRight">오른쪽정렬</button>
+    <br/>
+    
+    <select id="fontName" width="50px">
+        <option value="">글꼴 선택</option>
+        <option value="돋움">돋움</option>
+        <option value="굴림">굴림</option>
+        <option value="궁서">궁서</option>
+        <option value="바탕">바탕</option>
+        <option value="맑은 고딕">맑은 고딕</option>
+    </select>
+    <select id="fontSize" width="50px">
+        <option value="">글자 크기</option>
+        <option value="1">4px</option>
+        <option value="2">8px</option>
+        <option value="3">10px</option>
+        <option value="4">12px</option>
+        <option value="5">16px</option>
+        <option value="6">20px</option>
+        <option value="7">30px</option>
+    </select>
+    <select id="foreColor" width="50px">
+        <option value="">글자 색깔</option>
+        <option value="#f00">빨강</option>
+        <option value="#00f">파랑</option>
+        <option value="#0f0">초록</option>
+        <option value="#ffff00">노랑</option>
+        <option value="#000">검정</option>
+    </select>
+    <select id="hiliteColor" width="50px">
+        <option value="">글자 배경색</option>
+        <option value="#f00">빨강</option>
+        <option value="#00f">파랑</option>
+        <option value="#0f0">초록</option>
+        <option value="#ffff00">노랑</option>
+        <option value="#000">검정</option>
+    </select>
+  </div>
+  <div id="text" contenteditable="true" style="width:400px; height:400px;">
+      텍스트 편집기
+  </div>
+  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+</div>
+<ul id="menu" class="test">
+    <li><div>글꼴선택</div>
+        <ul>
+            <li><div>돋움</div></li>
+            <li><div>궁서</div></li>
+        </ul>
+    </li>
+    <li><div>글자크기</div>
+    </li>
+    <li><div>글자색깔</div>
+    </li>
+    <li><div>글자배경색</div>
+    </li>
+</ul>
+<div>efefefafeasfsaffsesfsa</div>
+<button id="test" onclick="test()">test1</button>
+<div id="test2" class="hide">hi</div>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+    $("#menu").menu();
+    
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand('insertBrOnReturn', false, true);
+    $(document).ready(function() {
+        $("#text").focus();
+        $('button').click(function(){
+        document.execCommand($(this).attr('id'), false, true);
+        });
+        // $('#bold').click(function() {
+        //   document.execCommand('bold', false, true);
+        // });
+        // $('#selectAll').click(function() {
+        //   document.execCommand('selectAll', false, true);
+        // });
+        // $('#italic').click(function() {
+        //   document.execCommand('italic', false, true);
+        // });
+        // $("#underLine").click(function() {
+        //   document.execCommand('underLine', false, true);
+        // });
+        // $("#justifyLeft").click(function() {
+        //   document.execCommand('justifyLeft', false);
+        // });
+        // $("#justifyRight").click(function() {
+        //   document.execCommand('justifyRight', false);
+        // });
+        // $("#justifyCenter").click(function() {
+        //   document.execCommand('justifyCenter', false);
+        // }); 
+        $('select').change(function(){
+        document.execCommand($(this).attr('id'), false, $(this).val());
+        });
+        // $("#foreColor").change(function(){ 
+        //   document.execCommand('foreColor', false, $(this).val());
+        // });
+        // $("#hiliteColor").change(function(){
+        //   document.execCommand('hiliteColor', false, $(this).val());
+        // });
+        // $("#fontName").change(function(){
+        //   document.execCommand('fontName', false, $(this).val());
+        // });
+        // $("#fontSize").change(function(){
+        //   document.execCommand('fontSize', false, $(this).val());
+        // });
+        
+    });
+    function myFunction() {
+        //document.getElementById("myDropdown").classList.toggle("show");
+        //document.getElementById("menu").classList.toggle("show");
+        let element = document.getElementById("menu");
+        element.style.display = "block";
+    }
+    
+    // Close the dropdown if the user clicks outside of it
+    /*window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            let element = document.getElementById("menu");
+            element.style.display = "none";
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }*/
+
+    function selectText() {
+        var selectionText = "";
+        if (document.getSelection) {
+            selectionText = document.getSelection();
+        } else if (document.selection) {
+            selectionText = document.selection.createRange().text;
+        }
+        return selectionText;
+    }
+   
+    var d = document.getElementById("text")
+    
+    d.onmouseup = function(e){
+        //document.getElementById("text").innerHTML = selectText();
+        if (document.getSelection){
+            let element = document.getElementById("menu");
+            element.style.display = "block";
+            element.style.position = "absolute";
+            //const absoluteTop = window.pageYOffset + element.getBoundingClientRect().top;
+            var divEl = $("#text");
+            var divX = divEl.offset().left;
+            var divY = divEl.offset().top;
+
+            var a = e.pageX;
+            var b = e.pageY;
+            console.log(a+" "+b);  
+            var c = document.getElementById("myDropdown");
+            c.style.left = a+"px";
+            c.style.top = b+"px";
+            c.style.display = "block";
+            c.style.position = "absolute";
+            
+            c.style.position = "absolute !important"
+            //console.log(divX+" "+divY);
+            //$("#text").mouseup(function(e) {
+                //var a = e.pageX;
+                //var b = e.pageY;
+                //console.log(a+" "+b);  
+                //var c = document.getElementById("myDropdown")
+                //c.style.display = "block";
+                //c.style.left = e.pageX;
+                //c.style.top = e.pageY;
+                //c.style.position = "absolute !important"
+            //})
+        }
+    }
+</script>
+<!-- <script type="text/javascript">
+    function selectText() {
+        var selectionText = "";
+        if (document.getSelection) {
+            selectionText = document.getSelection();
+        } else if (document.selection) {
+            selectionText = document.selection.createRange().text;
+        }
+        return selectionText;
+    }
+   
+    document.onmouseup = function() {
+        document.getElementById("console").innerHTML = selectText();
+    }
+    document.styleSheets()
+</script> -->
+</body>
+</html>
