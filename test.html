@@ -37,10 +37,6 @@
 <meta charset="UTF-8">
 <title>글자 편집기</title>
 <style type="text/css">
-    #menu{
-        width: 100px;
-        height: 150px;
-    }
   #text {
     -moz-appearance: textfield-multiline;
     -webkit-appearance: textarea;
@@ -110,8 +106,15 @@
     text-decoration: none;
     display: block;
 }
+
+.dropdown-values{
+    width: 95px;
+}
+
 #menu{
     display: none;
+    width: 120px;
+    height: 120px;
 }
 .dropdown a:hover {background-color: #f1f1f1}
 
@@ -171,29 +174,48 @@
   <div id="text" contenteditable="true" style="width:400px; height:400px;">
       텍스트 편집기
   </div>
-  <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="#home">Home</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-</div>
+  
 <ul id="menu" class="test">
     <li><div>글꼴선택</div>
-        <ul>
-            <li><div>돋움</div></li>
-            <li><div>궁서</div></li>
+        <ul id="fontName" class="dropdown-values">
+            <li value="돋움"><div>돋움</div></li>
+            <li value="궁서"><div>궁서</div></li>
+            <li value="굴림"><div>굴림</div></li>
+            <li value="바탕"><div>바탕</div></li>
+            <li value="맑은 고딕"><div>맑은 고딕</div></li>
         </ul>
     </li>
     <li><div>글자크기</div>
+        <ul id="fontSize" class="dropdown-values">
+            <li value="1"><div>4px</div></li>
+            <li value="2"><div>8px</div></li>
+            <li value="3"><div>10px</div></li>
+            <li value="4"><div>12px</div></li>
+            <li value="5"><div>16px</div></li>
+            <li value="6"><div>20px</div></li>
+            <li value="7"><div>30px</div></li>
+        </ul>
     </li>
     <li><div>글자색깔</div>
+        <ul id="foreColor" class="dropdown-values">
+            <li value="#f00"><div>빨강</div></li>
+            <li value="#00f"><div>파랑</div></li>
+            <li value="#0f0"><div>초록</div></li>
+            <li value="#ffff00"><div>노랑</div></li>
+            <li value="#000"><div>검정</div></li>
+        </ul>
     </li>
     <li><div>글자배경색</div>
+        <ul id="hiliteColor" class="dropdown-values">
+            <li value="#f00"><div>빨강</div></li>
+            <li value="#00f"><div>파랑</div></li>
+            <li value="#0f0"><div>초록</div></li>
+            <li value="#ffff00"><div>노랑</div></li>
+            <li value="#000"><div>검정</div></li>
+        </ul>
     </li>
 </ul>
-<div>efefefafeasfsaffsesfsa</div>
-<button id="test" onclick="test()">test1</button>
-<div id="test2" class="hide">hi</div>
+
 <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
 <script>
@@ -201,60 +223,33 @@
     
     document.execCommand('styleWithCSS', false, true);
     document.execCommand('insertBrOnReturn', false, true);
+
     $(document).ready(function() {
         $("#text").focus();
+
+        $("li").click(function(){
+            let contentId = $(this).parent().attr('id');
+
+            if(contentId == 'fontName' || contentId == 'fontSize' 
+                || contentId == 'foreColor' || contentId == 'hiliteColor'){
+               document.execCommand(contentId, false, $(this).attr('value'));
+            } 
+        })
         $('button').click(function(){
         document.execCommand($(this).attr('id'), false, true);
         });
-        // $('#bold').click(function() {
-        //   document.execCommand('bold', false, true);
-        // });
-        // $('#selectAll').click(function() {
-        //   document.execCommand('selectAll', false, true);
-        // });
-        // $('#italic').click(function() {
-        //   document.execCommand('italic', false, true);
-        // });
-        // $("#underLine").click(function() {
-        //   document.execCommand('underLine', false, true);
-        // });
-        // $("#justifyLeft").click(function() {
-        //   document.execCommand('justifyLeft', false);
-        // });
-        // $("#justifyRight").click(function() {
-        //   document.execCommand('justifyRight', false);
-        // });
-        // $("#justifyCenter").click(function() {
-        //   document.execCommand('justifyCenter', false);
-        // }); 
+        
         $('select').change(function(){
         document.execCommand($(this).attr('id'), false, $(this).val());
         });
-        // $("#foreColor").change(function(){ 
-        //   document.execCommand('foreColor', false, $(this).val());
-        // });
-        // $("#hiliteColor").change(function(){
-        //   document.execCommand('hiliteColor', false, $(this).val());
-        // });
-        // $("#fontName").change(function(){
-        //   document.execCommand('fontName', false, $(this).val());
-        // });
-        // $("#fontSize").change(function(){
-        //   document.execCommand('fontSize', false, $(this).val());
-        // });
         
     });
-    function myFunction() {
-        //document.getElementById("myDropdown").classList.toggle("show");
-        //document.getElementById("menu").classList.toggle("show");
-        let element = document.getElementById("menu");
-        element.style.display = "block";
-    }
 
     // text 입력 창 이외 부분을 클릭했을 때 메뉴 없어지게 
     window.onclick = function(event) {
         if(!event.target.matches('#text')){
-            element.style.display = "none";
+            let element = document.getElementById("menu");
+            //element.style.display = "none";
         }
     }
    
@@ -262,25 +257,16 @@
     var d = document.getElementById("text")
     d.onmouseup = function(e){
         if (document.getSelection){
-            
-            let element = document.getElementById("menu");
-            element.style.display = "block";
-            element.style.position = "absolute";
-
             // 마지막 드래그 위치 가져오기
-            let el = document.getElementById("myDropdown");
+            let el = document.getElementById("menu");
 
-            if(!e.target.matches('#text')){
-                alert("efe");
-                el.style.display = "none";    
-            }
-            // 메뉴 나오게 하기
+            // 메뉴
             if(document.getSelection().toString() == ''){
                 el.style.display = "none";
-            } else{
+            } else{// 메뉴 나오게 하기
                 let left = e.pageX;
                 let top = e.pageY;
-    
+                
                 el.style.left = left + "px";
                 el.style.top = top + "px";
                 el.style.display = "block";
@@ -289,21 +275,5 @@
         }
     }
 </script>
-<!-- <script type="text/javascript">
-    function selectText() {
-        var selectionText = "";
-        if (document.getSelection) {
-            selectionText = document.getSelection();
-        } else if (document.selection) {
-            selectionText = document.selection.createRange().text;
-        }
-        return selectionText;
-    }
-   
-    document.onmouseup = function() {
-        document.getElementById("console").innerHTML = selectText();
-    }
-    document.styleSheets()
-</script> -->
 </body>
 </html>
