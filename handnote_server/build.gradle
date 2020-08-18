@@ -21,8 +21,12 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// File Upload
 	implementation 'commons-fileupload:commons-fileupload:1.4'
 	implementation 'commons-io:commons-io:2.6'
+	// 외부 API 통신
+	implementation 'org.apache.httpcomponents:httpclient:4.5.12'
+
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'org.apache.tomcat:tomcat-jasper:9.0.37'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
