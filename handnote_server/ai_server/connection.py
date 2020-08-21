@@ -1,25 +1,34 @@
-from flask_restful import Resource, reqparse, Api
+from flask_restful import Resource, Api, reqparse
 from flask import Flask, make_response
 from json import dumps
+import cv2
+import werkzeug
+import numpy as np
+
 
 app = Flask(__name__)
 api = Api(app)
 
 class ImageToString(Resource):
-    def get(self):
-        try:
-        	f = request.files['file']
+    def post(self):
+        parser = reqparse.RequestParser()
 
+        # 스프링 - id, img 정보
+        # werkzeug.datastructures.FileStorage - 파일
+        # parser.add_argument('id', required=True, type=int)
+        parser.add_argument('img', required=True, type=werkzeug.datastructures.FileStorage, location='files')
+        args = parser.parse_args()
 
-            # parser = reqparse.RequestParser()
-            
-            # parser.add_argument('x', required=True, type=int, help='x cannot be blank')
-            # parser.add_argument('y', required=True, type=int, help='y cannot be blank')
-            # args = parser.parse_args()
-            # result = args['x'] + args['y']
-            return {'imgName': 'www', 'text': "What??"}
-        except Exception as e:
-            return {'error': str(e)}
+        # 서버로부터 받은 이미지 Stream => np => cv 처리
+        img_stream = args['img'].stream.read()
+        img_np = np.frombuffer(img_stream, np.uint8)    #fromstring => frombuffer
+        img = cv2.imdecode(img_np,  cv2.IMREAD_COLOR)
+
+        # Test용 - 저장
+        cv2.imwrite("picture_test.jpg",img)
+
+        return "Hello"
+
 
 api.add_resource(ImageToString, '/img-string')
 

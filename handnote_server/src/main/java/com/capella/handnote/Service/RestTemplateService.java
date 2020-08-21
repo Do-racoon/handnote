@@ -1,12 +1,16 @@
 package com.capella.handnote.Service;
 
-import com.capella.handnote.Domain.JsonVo;
-import com.capella.handnote.Service.RestTemplateUtil;
+import com.capella.handnote.Domain.ImageString;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RestTemplateService {
-    public JsonVo getJsonData(){
-        return RestTemplateUtil.getJsonResponse();
+    private RestTemplateUtil restTemplateUtil;
+
+    public RestTemplateService(RestTemplateUtil restTemplateUtil){
+        this.restTemplateUtil = restTemplateUtil;
+    }
+    public String ImageToString(String url, ImageString imageString) throws Exception{
+        return restTemplateUtil.SendImage(url, imageString);
     }
 }
