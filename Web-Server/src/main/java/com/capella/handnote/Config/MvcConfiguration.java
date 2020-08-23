@@ -14,7 +14,7 @@ public class MvcConfiguration implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")                  // '/'로 시작하는 모든 요청을 다룸
                 .addResourceLocations("classpath:/templates/")          // '/templates' 폴더를 지정해서 찾음.
-                                                                        // addResourceLocations("classpath:/templates/", "classpath:/WEB-INF/resources/")
+                // addResourceLocations("classpath:/templates/", "classpath:/WEB-INF/resources/")
                 .setCacheControl(CacheControl.maxAge(10, TimeUnit.MINUTES));
     }
 }

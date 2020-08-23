@@ -3,15 +3,11 @@ package com.capella.handnote.Interface;
 import com.capella.handnote.Domain.ImageString;
 import com.capella.handnote.Service.RestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.view.RedirectView;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.http.HttpRequest;
+import java.awt.*;
 
 @Controller
 public class WebController {
@@ -34,10 +30,10 @@ public class WebController {
     public String fileUpload(@RequestParam("report") MultipartFile mFile){
 
         try{
-            ImageString imageString = ImageString.builder()
-                                                .img(mFile).build();
-            // Flask 서버로 전달 - 객체
-            restTemplateService.ImageToString("http://localhost:5000/img-string", imageString);
+            ImageString imageString = new ImageString(mFile.getOriginalFilename(),mFile);
+            // Flask 서버로 요청 - 객체
+            String str = restTemplateService.ImageToString("http://0.0.0.0:5000/img-string", imageString);
+            System.out.println(str);
         }catch (Exception err){
             err.printStackTrace();
         }

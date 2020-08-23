@@ -1,0 +1,16 @@
+version: '3'
+services:
+  spring-server:
+    container_name: spring
+    build: ./Web-Server/Dockerfile
+    image: web-server
+    ports:
+    - "8000:8080"
+    command: bash -c "cd /app && sh run.sh"
+
+  flask-server:
+    container_name: flask
+    build: ./Ai-Server/Dockerfile
+    image: ai-server
+    network_mode: "service:spring-server"
+
