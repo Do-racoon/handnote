@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+<head>
+    <meta charset="UTF-8">
+    <title>HandNote</title>
+    <style type="text/css">
+#text {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 1px solid gray;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    overflow: auto;
+    padding: 2px;
+    resize: both;
+    margin-top:10px;
+}
+button {
+    background-color: #555555; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-values{
+    width: 95px;
+}
+
+#menu{
+    display: none;
+    width: 120px;
+    height: 120px;
+}
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+
+#imageContainer{
+    width: 500px;
+    height: 300px;
+    padding-top: 50px;
+}
+
+#editText{
+    position: absolute; /*or fixed*/
+    right: 200px;
+    top: 50px;
+}
+
+#imageUpload{
+    position: absolute; /*or fixed*/
+    left: 100px;
+    top:100px;
+    text-align: center;
+}
+
+.convertButton1{
+    position: absolute;
+    top: 40%;
+    left:45%;
+}
+.convertButton2{
+    position: absolute;
+    top: 50%;
+    left: 45%;
+}
+
+</style>
+    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+</head>
+<body>
+<form action="fileupload" method="post" enctype="multipart/form-data">
+<div id="imageUpload">
+    <h2>이미지 업로드</h2>
+    <input id="convert" type="file" name="convert" onchange="setThumbnail(event);">
+    <div id="imageContainer"></div>
+</div>
+<button class="convertButton1" type="submit" >텍스트로<br>변환</button>
+</form>
+<form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
+<button class="convertButton2">중요부분<br>변환</button>
+</form>
+<div id="editText">
+    <div style="width:390px; padding: 10px; text-align:center;">
+        <button id="selectAll" class="btn-change-text">전체선택</button>
+        <button id="bold" class="btn-change-text">굵게</button>
+        <button id="italic" class="btn-change-text">기울임</button>
+        <button id="underLine" class="btn-change-text">밑줄</button>
+        <br/>
+        <br/>
+        <button id="justifyLeft" class="btn-change-text">왼쪽정렬</button>
+        <button id="justifyCenter" class="btn-change-text">가운데정렬</button>
+        <button id="justifyRight" class="btn-change-text">오른쪽정렬</button>
+        <br/>
+    </div>
+    제목 : <input type="text" name="name" id="inputTitle" class="form-control" required=""/>
+    <div id="text" contenteditable="true" style="width:400px; height:400px;">
+    </div>
+    <form action="/dashboard" method="get">
+        <button id="btn-save" type="button">저장</button>
+        <button id="btn-back" type="submit">Home</button>
+    </form>
+</div>
+<ul id="menu" class="test">
+    <li><div>글꼴선택</div>
+        <ul id="fontName" class="dropdown-values">
+            <li value="돋움"><div>돋움</div></li>
+            <li value="궁서"><div>궁서</div></li>
+            <li value="굴림"><div>굴림</div></li>
+            <li value="바탕"><div>바탕</div></li>
+            <li value="맑은 고딕"><div>맑은 고딕</div></li>
+        </ul>
+    </li>
+    <li><div>글자크기</div>
+        <ul id="fontSize" class="dropdown-values">
+            <li value="1"><div>4px</div></li>
+            <li value="2"><div>8px</div></li>
+            <li value="3"><div>10px</div></li>
+            <li value="4"><div>12px</div></li>
+            <li value="5"><div>16px</div></li>
+            <li value="6"><div>20px</div></li>
+            <li value="7"><div>30px</div></li>
+        </ul>
+    </li>
+    <li><div>글자색깔</div>
+        <ul id="foreColor" class="dropdown-values">
+            <li value="#f00"><div>빨강</div></li>
+            <li value="#00f"><div>파랑</div></li>
+            <li value="#0f0"><div>초록</div></li>
+            <li value="#ffff00"><div>노랑</div></li>
+            <li value="#000"><div>검정</div></li>
+        </ul>
+    </li>
+    <li><div>글자배경색</div>
+        <ul id="hiliteColor" class="dropdown-values">
+            <li value="#f00"><div>빨강</div></li>
+            <li value="#00f"><div>파랑</div></li>
+            <li value="#0f0"><div>초록</div></li>
+            <li value="#ffff00"><div>노랑</div></li>
+            <li value="#000"><div>검정</div></li>
+        </ul>
+    </li>
+</ul>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script th:inline="javascript">
+    $("#menu").menu();
+
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand('insertBrOnReturn', false, true);
+
+    $(document).ready(function() {
+        $("#text").focus();
+
+        $("li").click(function(){
+            let contentId = $(this).parent().attr('id');
+
+            if(contentId == 'fontName' || contentId == 'fontSize'
+                || contentId == 'foreColor' || contentId == 'hiliteColor'){
+               document.execCommand(contentId, false, $(this).attr('value'));
+            }
+        })
+        $('.btn-change-text').click(function(){
+        document.execCommand($(this).attr('id'), false, true);
+        });
+
+        $('select').change(function(){
+        document.execCommand($(this).attr('id'), false, $(this).val());
+        });
+
+    });
+
+    // text 입력 창 이외 부분을 클릭했을 때 메뉴 없어지게
+    window.onclick = function(event) {
+        if(!event.target.matches('#text')){
+            let element = document.getElementById("menu");
+            //element.style.display = "none";
+        }
+    }
+
+    // 드래그 마지막에 메뉴 나오게 하기
+    var d = document.getElementById("text")
+    d.onmouseup = function(e){
+        if (document.getSelection){
+            // 마지막 드래그 위치 가져오기
+            let el = document.getElementById("menu");
+
+            // 메뉴
+            if(document.getSelection().toString() == ''){
+                el.style.display = "none";
+            } else{// 메뉴 나오게 하기
+                let left = e.pageX;
+                let top = e.pageY;
+
+                el.style.left = left + "px";
+                el.style.top = top + "px";
+                el.style.display = "block";
+                el.style.position = "absolute";
+            }
+        }
+    }
+
+    // 이미지 미리보기
+    function setThumbnail(event) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("width", "500px");
+            img.setAttribute("height", "300px");
+            img.setAttribute("left", "100px");
+            document.querySelector("#imageContainer").appendChild(img);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+
+</script>
+<script src="/js/app/index.js"></script>
+</body>
+</html>
