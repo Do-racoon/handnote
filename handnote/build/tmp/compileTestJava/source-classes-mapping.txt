@@ -1,2 +1,0 @@
-com/jihun/handnote/springboot/web/UserControllerTest.java
- com.jihun.handnote.springboot.web.UserControllerTest
