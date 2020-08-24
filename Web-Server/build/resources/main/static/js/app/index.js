@@ -12,9 +12,12 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+<<<<<<< HEAD
         $('#btn-convert').on('click', function () {
             _this.convert();
         });
+=======
+>>>>>>> 78460726eb6d9844439e0eba97cc744eede08c18
     },
     save : function () {
         var data = {
@@ -53,6 +56,7 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
+<<<<<<< HEAD
     convert : function () {
             var form = $("#form-convert")[0];
             var formData = new FormData(form);
@@ -75,6 +79,8 @@ var main = {
                 alert(JSON.stringify(error));
             });
     },
+=======
+>>>>>>> 78460726eb6d9844439e0eba97cc744eede08c18
     delete : function () {
         $.ajax({
             type: 'DELETE',

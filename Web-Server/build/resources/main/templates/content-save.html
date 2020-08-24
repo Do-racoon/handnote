@@ -99,6 +99,7 @@ button {
 
 </head>
 <body>
+<<<<<<< HEAD:Web-Server/build/resources/main/templates/content-save.html
 <form method="post" id="form-convert" enctype="multipart/form-data">
     <div id="imageUpload">
         <h2>이미지 업로드</h2>
@@ -108,6 +109,16 @@ button {
 </form>
 <button id="btn-convert" type="button" >텍스트로<br>변환</button>
 <button type="button">변경 테스트</button>
+=======
+<form action="fileupload" method="post" enctype="multipart/form-data">
+<div id="imageUpload">
+    <h2>이미지 업로드</h2>
+    <input id="convert" type="file" name="convert" onchange="setThumbnail(event);">
+    <div id="imageContainer"></div>
+</div>
+<button class="convertButton1" type="submit" >텍스트로<br>변환</button>
+</form>
+>>>>>>> 78460726eb6d9844439e0eba97cc744eede08c18:handnote/src/main/resources/templates/content-save.html
 <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
 <button class="convertButton2">중요부분<br>변환</button>
 </form>
