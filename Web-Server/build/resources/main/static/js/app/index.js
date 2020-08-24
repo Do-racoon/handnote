@@ -12,6 +12,9 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+        $('#btn-convert').on('click', function () {
+            _this.convert();
+        });
     },
     save : function () {
         var data = {
@@ -49,6 +52,28 @@ var main = {
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
+    },
+    convert : function () {
+            var form = $("#form-convert")[0];
+            var formData = new FormData(form);
+
+//            formData.append("file", $("#convert")[0].files[0]);
+
+            $.ajax({
+                type: 'POST',
+                url: '/fileupload',
+                enctype: 'multipart/form-data',
+                processData : false,
+                contentType:false,
+                data: formData
+            }).done(function(str) {
+                alert('글로 변환되었습니다.');
+                var convertText = JSON.stringify(str);
+                console.log(convertText);
+                $("#text").text(convertText);
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
     },
     delete : function () {
         $.ajax({
