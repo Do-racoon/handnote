@@ -95,18 +95,19 @@ button {
 }
 
 </style>
-    <script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 </head>
 <body>
-<form action="fileupload" method="post" enctype="multipart/form-data">
-<div id="imageUpload">
-    <h2>이미지 업로드</h2>
-    <input id="convert" type="file" name="convert" onchange="setThumbnail(event);">
-    <div id="imageContainer"></div>
-</div>
-<button class="convertButton1" type="submit" >텍스트로<br>변환</button>
+<form method="post" id="form-convert" enctype="multipart/form-data">
+    <div id="imageUpload">
+        <h2>이미지 업로드</h2>
+        <input id="convert" type="file" name="convert" onchange="setThumbnail(event);">
+        <div id="imageContainer"></div>
+    </div>
 </form>
+<button id="btn-convert" type="button" >텍스트로<br>변환</button>
+<button type="button">변경 테스트</button>
 <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
 <button class="convertButton2">중요부분<br>변환</button>
 </form>
@@ -247,6 +248,6 @@ button {
 
 
 </script>
-<script src="/js/app/index.js"></script>
+<script src="./js/app/index.js"></script>
 </body>
 </html>

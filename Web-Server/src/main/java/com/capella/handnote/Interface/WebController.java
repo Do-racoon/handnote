@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
-@Controller
+@RestController
 public class WebController {
     private RestTemplateService restTemplateService;
 
@@ -29,7 +29,7 @@ public class WebController {
             err.printStackTrace();
         }
 
-        return "redirect:content";
+        return "hello";
     }
 
 }
