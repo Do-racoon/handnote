@@ -1,5 +1,14 @@
 version: '3'
 services:
+  db:
+    container_name: db
+    image: mongodb
+    ports:
+    - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 1234
+
   spring-server:
     container_name: spring
     build: ./Web-Server/Dockerfile
@@ -13,4 +22,6 @@ services:
     build: ./Ai-Server/Dockerfile
     image: ai-server
     network_mode: "service:spring-server"
+
+
 

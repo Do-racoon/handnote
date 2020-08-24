@@ -1,4 +1,4 @@
-package com.capella.handnote.Interface;
+package com.capella.handnote.Interface.dto;
 
 import lombok.Builder;
 import lombok.Getter;
