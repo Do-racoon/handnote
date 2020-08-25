@@ -2,6 +2,7 @@ package com.capella.handnote.Interface;
 
 import com.capella.handnote.Domain.Content;
 import com.capella.handnote.Domain.User;
+import com.capella.handnote.Interface.dto.ContentSaveRequestDto;
 import com.capella.handnote.Interface.dto.ContentUpdateRequestDto;
 import com.capella.handnote.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.naming.ContextNotEmptyException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 public class LoginController {
@@ -83,7 +86,7 @@ public class LoginController {
     @GetMapping({"/","/home"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
@@ -96,12 +99,13 @@ public class LoginController {
     }
     // 새글에서 content 저장
     @PostMapping("/content")
-    public ModelAndView saveContent(@RequestBody Content content){
+    public ModelAndView saveContent(@RequestBody ContentSaveRequestDto contentSaveRequestDto){
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(authentication.getName());
+        Content content = new Content(user.getId(), contentSaveRequestDto.getText(), contentSaveRequestDto.getTitle());
 
-        content.setUserId(user.getId());
+//        content.setUserId(user.getId());
         userService.saveContent(content);
         modelAndView.setViewName("dashboard");
         return modelAndView;
