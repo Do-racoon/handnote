@@ -18,10 +18,10 @@ var main = {
     },
     save : function () {
         var data = {
-            title: $('#inputTitle').val(),
-            text: $('#text').html()
+            "title": $('#inputTitle').val(),
+            "text": $('#text').html()
         };
-
+        console.log(data['text']);
         $.ajax({
             type: 'POST',
             url: '/content',
@@ -29,7 +29,7 @@ var main = {
             contentType:'application/json; charset=utf-8',
             data: JSON.stringify(data)
         }).done(function() {
-            alert('새 글이 저장되었습니다.');
+            alert('새 글이 저장되었습니다.!!!!');
             window.location.href = '/dashboard';
         }).fail(function (error) {
             alert(JSON.stringify(error));
