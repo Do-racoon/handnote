@@ -2,26 +2,37 @@ version: '3'
 services:
   db:
     container_name: db
-    image: mongodb
+    image: mongo
     ports:
     - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: 1234
+    volumes:
+    - ./Volume:/Volume
+    network_mode: "host"
+    healthcheck:
+      test: echo 'db.runCommand({serverStatus:1}).ok' | mongo admin -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD --quiet | grep 1
+      timeout: 20s
+      retries: 10
 
   spring-server:
     container_name: spring
-    build: ./Web-Server/Dockerfile
+    build: 
+      context: ./Web-Server
+      dockerfile: Dockerfile
     image: web-server
+    depends_on:
+    - db
+    links:
+    - db
     ports:
     - "8000:8080"
-    command: bash -c "cd /app && sh run.sh"
+    command: bash -c "sh run.sh"
 
   flask-server:
     container_name: flask
-    build: ./Ai-Server/Dockerfile
+    build: 
+      context: ./Ai-Server
+      dockerfile: Dockerfile
     image: ai-server
     network_mode: "service:spring-server"
-
 
 
