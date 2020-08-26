@@ -35,7 +35,8 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
