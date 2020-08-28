@@ -113,3 +113,5 @@ Ai-Model/English-Predict/test_img/
 Ai-Model/init
 
 Ai-Model/English-Predict/modules/__pycache__/dataset.cpython-37.pyc
+
+Web-Server/build/
