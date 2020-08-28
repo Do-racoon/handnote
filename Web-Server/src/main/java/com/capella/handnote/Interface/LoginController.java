@@ -110,20 +110,7 @@ public class LoginController {
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
-    // 기존에 있던 content를 불러와서 편집하기
-//    @GetMapping("/content/{id}")
-//    public ModelAndView userContent(@PathVariable String id){
-//        ModelAndView modelAndView = new ModelAndView();
-//        // 저장된 content 가져오기(인자는 id를 통해서)
-//        Content content = userService.findContent(id);
-//
-//        System.out.println("what : "+content.getText()+content.getTitle());
-//        modelAndView.addObject("id", content.getId());
-//        modelAndView.addObject("title", content.getTitle());
-//        modelAndView.addObject("text", content.getText());
-//        modelAndView.setViewName("content-update");
-//        return modelAndView;
-//    }
+
     // content 업데이트
     @PutMapping("/content/{id}")
     public ModelAndView updateContent(@PathVariable String id, @RequestBody ContentUpdateRequestDto contentUpdateRequestDto){
