@@ -94,7 +94,7 @@ public class LoginController {
     @GetMapping("/content")
     public ModelAndView content(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("content-save");
+        modelAndView.setViewName("content_new_edit");
         return modelAndView;
     }
     // 새글에서 content 저장
@@ -111,18 +111,19 @@ public class LoginController {
         return modelAndView;
     }
     // 기존에 있던 content를 불러와서 편집하기
-    @GetMapping("/content/{id}")
-    public ModelAndView userContent(@PathVariable String id){
-        ModelAndView modelAndView = new ModelAndView();
-        // 저장된 content 가져오기(인자는 id를 통해서)
-        Content content = userService.findContent(id);
-
-        modelAndView.addObject("id", content.getId());
-        modelAndView.addObject("title", content.getTitle());
-        modelAndView.addObject("text", content.getText());
-        modelAndView.setViewName("content-update");
-        return modelAndView;
-    }
+//    @GetMapping("/content/{id}")
+//    public ModelAndView userContent(@PathVariable String id){
+//        ModelAndView modelAndView = new ModelAndView();
+//        // 저장된 content 가져오기(인자는 id를 통해서)
+//        Content content = userService.findContent(id);
+//
+//        System.out.println("what : "+content.getText()+content.getTitle());
+//        modelAndView.addObject("id", content.getId());
+//        modelAndView.addObject("title", content.getTitle());
+//        modelAndView.addObject("text", content.getText());
+//        modelAndView.setViewName("content-update");
+//        return modelAndView;
+//    }
     // content 업데이트
     @PutMapping("/content/{id}")
     public ModelAndView updateContent(@PathVariable String id, @RequestBody ContentUpdateRequestDto contentUpdateRequestDto){

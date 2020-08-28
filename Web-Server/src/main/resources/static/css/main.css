@@ -27,6 +27,35 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
   display: block; }
 
+#text {
+    -moz-appearance: textfield-multiline;
+    -webkit-appearance: textarea;
+    border: 1px solid gray;
+    border-radius: 3px;
+    font: medium -moz-fixed;
+    font: -webkit-small-control;
+    overflow: auto;
+    padding: 2px;
+    resize: both;
+    margin-top:10px;
+    width : 100%;
+    height : 100%;
+}
+
+button {
+    background-color: #555555; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
 body {
   line-height: 1; }
 
@@ -90,20 +119,20 @@ body {
     transition: none !important; }
 
 /* Type */
-body, input, select, textarea {
-  color: #7f888f;
+body, input, select, textarea{
+  color: black;
   font-family: "Open Sans", sans-serif;
   font-size: 13pt;
   font-weight: 400;
   line-height: 1.65; }
   @media screen and (max-width: 1680px) {
-    body, input, select, textarea {
+    body, input, select, textarea{
       font-size: 11pt; } }
   @media screen and (max-width: 1280px) {
-    body, input, select, textarea {
+    body, input, select, textarea{
       font-size: 10pt; } }
   @media screen and (max-width: 360px) {
-    body, input, select, textarea {
+    body, input, select, textarea{
       font-size: 9pt; } }
 
 a {
@@ -130,7 +159,7 @@ em, i {
 p {
   margin: 0 0 2em 0; }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h3, h4, h5, h6 {
   color: #3d4449;
   font-family: "Roboto Slab", serif;
   font-weight: 700;
@@ -1482,7 +1511,6 @@ table {
 input[type="submit"],
 input[type="reset"],
 input[type="button"],
-button,
 .button {
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -1513,13 +1541,11 @@ button,
   input[type="submit"]:hover,
   input[type="reset"]:hover,
   input[type="button"]:hover,
-  button:hover,
   .button:hover {
     background-color: rgba(245, 106, 106, 0.05); }
   input[type="submit"]:active,
   input[type="reset"]:active,
   input[type="button"]:active,
-  button:active,
   .button:active {
     background-color: rgba(245, 106, 106, 0.15); }
   input[type="submit"].icon:before,
@@ -2271,3 +2297,43 @@ button,
     border-top: 0;
     margin-top: 0;
     padding-top: 0; }
+
+#editMenu{
+    display: none;
+    width: 120px;
+    height: 230px;
+}
+
+.dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-values{
+    width: 105px;
+}
+
+.ui-menu-item {
+    padding:0;
+    text-align: center;
+}
+
+.ui-menu-item-wrapper{
+    padding:0;
+}

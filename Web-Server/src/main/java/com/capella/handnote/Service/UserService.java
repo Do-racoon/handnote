@@ -1,6 +1,7 @@
 package com.capella.handnote.Service;
 
 import com.capella.handnote.Domain.*;
+import com.capella.handnote.Interface.dto.ContentResponseDto;
 import com.capella.handnote.Interface.dto.ContentUpdateRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,14 +41,17 @@ public class UserService implements UserDetailsService {
     public String saveContent(Content content){
         return contentRepository.save(content).getId();
     }
+
     // 작성한 글 정보 모두 가져오기
     public List<Content> findContentAll(String userId){
         return contentRepository.findAllByUserId(userId);
     }
+
     // content 정보 가져오기
     public Content findContent(String id){
         return contentRepository.findById(id).get();
     }
+
     // content 정보 업데이트 하기
     public void updateContent(String id, ContentUpdateRequestDto contentUpdateRequestDto){
         Content content = contentRepository.findById(id)
@@ -56,6 +60,13 @@ public class UserService implements UserDetailsService {
         content.update(contentUpdateRequestDto.getText(), contentUpdateRequestDto.getTitle());
         contentRepository.save(content);
     }
+
+    // content 정보를 dto를 통해서 반환
+    public ContentResponseDto findById(String id){
+        Content content = contentRepository.findById(id).get();
+        return new ContentResponseDto(content);
+    }
+
     // content 삭제하기
     public void deleteContent(String id){
         Content content = contentRepository.findById(id)
