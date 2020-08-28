@@ -1,23 +1,417 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
-<head>
-    <title>HandNote</title>
-</head>
-<body>
-<div layout:fragment="content">
-    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-    <h2>This is your Admin Dashboard</h2>
-</div>
-<form action="/content" method="get">
-    <button class="btn btn-lg btn-primary btn-block" type="submit">새글 쓰기</button>
-</form>
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<head>
+		<title>HandNote</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+	<body class="is-preload">
 
-<li th:each="content : ${contents}">
-    <a th:text="${content.title}" href="content-update.html" th:href="@{/content/{id}(id=${content.id})}"></a>
-</li>
-<form th:action="@{/logout}" method="post">
-    <button type="submit">Sign Out</button>
-</form>
-</body>
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="/dashboard" class="logo"><strong>Editorial</strong> by HandNote</a>
+								</header>
+
+							<!-- Banner -->
+								<section id="banner">
+<!--									이부분-->
+									<div class="content" id="editContent">
+										<div id="alignButton" class='actions' style="display: none;">
+											<button id="justifyLeft" class="button big btn-change-text">왼쪽정렬</button>
+											<button id="justifyCenter" class="button big btn-change-text" >가운데정렬</button>
+											<button id="justifyRight" class="button big btn-change-text">오른쪽정렬</button>
+											<br/>
+											<br/>
+										</div>
+										<div id="changeUpdatePage">
+											<header>
+												<h1>Hi, I’m Editorial<br/>
+													by HandNote
+												</h1>
+												<p>새로운 글을 쓰시려면 아래의 버튼을 눌러주세요.</p>
+											</header>
+											<!--										<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. Pellentesque sapien ac quam. Lorem ipsum dolor sit nullam.</p>-->
+											<ul class="actions">
+												<li><a href="/content" class="button big">New Edit</a></li>
+											</ul>
+										</div>
+									</div>
+<!--									<span class="image object" id="editButton">-->
+<!--										<img src="images/pic10.jpg" alt="" />-->
+<!--									</span>-->
+								</section>
+
+<!--							&lt;!&ndash; Section &ndash;&gt;-->
+<!--								<section>-->
+<!--									<header class="major">-->
+<!--										<h2>Erat lacinia</h2>-->
+<!--									</header>-->
+<!--									<div class="features">-->
+<!--										<article>-->
+<!--											<span class="icon fa-gem"></span>-->
+<!--											<div class="content">-->
+<!--												<h3>Portitor ullamcorper</h3>-->
+<!--												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											</div>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<span class="icon solid fa-paper-plane"></span>-->
+<!--											<div class="content">-->
+<!--												<h3>Sapien veroeros</h3>-->
+<!--												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											</div>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<span class="icon solid fa-rocket"></span>-->
+<!--											<div class="content">-->
+<!--												<h3>Quam lorem ipsum</h3>-->
+<!--												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											</div>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<span class="icon solid fa-signal"></span>-->
+<!--											<div class="content">-->
+<!--												<h3>Sed magna finibus</h3>-->
+<!--												<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											</div>-->
+<!--										</article>-->
+<!--									</div>-->
+<!--								</section>-->
+
+<!--							&lt;!&ndash; Section &ndash;&gt;-->
+<!--								<section>-->
+<!--									<header class="major">-->
+<!--										<h2>Ipsum sed dolor</h2>-->
+<!--									</header>-->
+<!--									<div class="posts">-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic01.jpg" alt="" /></a>-->
+<!--											<h3>Interdum aenean</h3>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											<ul class="actions">-->
+<!--												<li><a href="#" class="button">More</a></li>-->
+<!--											</ul>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic02.jpg" alt="" /></a>-->
+<!--											<h3>Nulla amet dolore</h3>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											<ul class="actions">-->
+<!--												<li><a href="#" class="button">More</a></li>-->
+<!--											</ul>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic03.jpg" alt="" /></a>-->
+<!--											<h3>Tempus ullamcorper</h3>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											<ul class="actions">-->
+<!--												<li><a href="#" class="button">More</a></li>-->
+<!--											</ul>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>-->
+<!--											<h3>Sed etiam facilis</h3>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											<ul class="actions">-->
+<!--												<li><a href="#" class="button">More</a></li>-->
+<!--											</ul>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>-->
+<!--											<h3>Feugiat lorem aenean</h3>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											<ul class="actions">-->
+<!--												<li><a href="#" class="button">More</a></li>-->
+<!--											</ul>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic06.jpg" alt="" /></a>-->
+<!--											<h3>Amet varius aliquam</h3>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--											<ul class="actions">-->
+<!--												<li><a href="#" class="button">More</a></li>-->
+<!--											</ul>-->
+<!--										</article>-->
+<!--									</div>-->
+<!--								</section>-->
+
+						</div>
+					</div>
+
+				<!-- Sidebar -->
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Search -->
+<!--								<section id="search" class="alt">-->
+<!--									<form method="post" action="#">-->
+<!--										<input type="text" name="query" id="query" placeholder="Search" />-->
+<!--									</form>-->
+<!--								</section>-->
+
+							<!-- Menu -->
+								<nav id="menu">
+									<header class="major">
+										<h2>Content</h2>
+									</header>
+									<ul>
+										<li th:each="content : ${contents}">
+											<a th:text="${content.title}" class="myContent" th:attr="onclick=|getContent('${content.id}')|" ></a>
+										</li>
+<!--										th:href="@{/content/{id}(id=${content.id})}"-->
+<!--										<li>-->
+<!--											<span class="opener">Submenu</span>-->
+<!--											<ul>-->
+<!--												<li><a href="#">Lorem Dolor</a></li>-->
+<!--												<li><a href="#">Ipsum Adipiscing</a></li>-->
+<!--												<li><a href="#">Tempus Magna</a></li>-->
+<!--												<li><a href="#">Feugiat Veroeros</a></li>-->
+<!--											</ul>-->
+<!--										</li>-->
+									</ul>
+								</nav>
+								<ul class="actions">
+									<li><a href="/content" class="button big">New Edit</a></li>
+									<li><a href="/logout" class="button big">Sign out</a></li>
+								</ul>
+<!--							&lt;!&ndash; Section &ndash;&gt;-->
+<!--								<section>-->
+<!--									<header class="major">-->
+<!--										<h2>Ante interdum</h2>-->
+<!--									</header>-->
+<!--									<div class="mini-posts">-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic07.jpg" alt="" /></a>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic08.jpg" alt="" /></a>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>-->
+<!--										</article>-->
+<!--										<article>-->
+<!--											<a href="#" class="image"><img src="images/pic09.jpg" alt="" /></a>-->
+<!--											<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore aliquam.</p>-->
+<!--										</article>-->
+<!--									</div>-->
+<!--									<ul class="actions">-->
+<!--										<li><a href="#" class="button">More</a></li>-->
+<!--									</ul>-->
+<!--								</section>-->
+
+<!--							&lt;!&ndash; Section &ndash;&gt;-->
+<!--								<section>-->
+<!--									<header class="major">-->
+<!--										<h2>Get in touch</h2>-->
+<!--									</header>-->
+<!--									<p>Sed varius enim lorem ullamcorper dolore aliquam aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin sed aliquam facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>-->
+<!--									<ul class="contact">-->
+<!--										<li class="icon solid fa-envelope"><a href="#">information@untitled.tld</a></li>-->
+<!--										<li class="icon solid fa-phone">(000) 000-0000</li>-->
+<!--										<li class="icon solid fa-home">1234 Somewhere Road #8254<br />-->
+<!--										Nashville, TN 00000-0000</li>-->
+<!--									</ul>-->
+<!--								</section>-->
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+						</div>
+					</div>
+
+			</div>
+<!--			편집 메뉴-->
+		<ul id="editMenu">
+			<li><div>글꼴선택</div>
+				<ul id="fontName" class="dropdown-values">
+					<li value="Courier New"><div>Courier New</div></li>
+					<li value="Verdana"><div>Verdana</div></li>
+					<li value="Times"><div>Times</div></li>
+					<li value="Courier"><div>Courier</div></li>
+					<li value="Copperplate"><div>Copperplate</div></li>
+				</ul>
+			</li>
+			<li><div>글자크기</div>
+				<ul id="fontSize" class="dropdown-values">
+					<li value="1"><div>4px</div></li>
+					<li value="2"><div>8px</div></li>
+					<li value="3"><div>10px</div></li>
+					<li value="4"><div>12px</div></li>
+					<li value="5"><div>16px</div></li>
+					<li value="6"><div>20px</div></li>
+					<li value="7"><div>30px</div></li>
+				</ul>
+			</li>
+			<li><div>글자색깔</div>
+				<ul id="foreColor" class="dropdown-values">
+					<li value="#f00"><div>빨강</div></li>
+					<li value="#00f"><div>파랑</div></li>
+					<li value="#0f0"><div>초록</div></li>
+					<li value="#ffff00"><div>노랑</div></li>
+					<li value="#000"><div>검정</div></li>
+				</ul>
+			</li>
+			<li><div>글자배경색</div>
+				<ul id="hiliteColor" class="dropdown-values">
+					<li value="#f00"><div>빨강</div></li>
+					<li value="#00f"><div>파랑</div></li>
+					<li value="#0f0"><div>초록</div></li>
+					<li value="#ffff00"><div>노랑</div></li>
+					<li value="#000"><div>검정</div></li>
+				</ul>
+			</li>
+			<li><div id="bold" class="btn-change-text">굵게</div></li>
+			<li><div id="italic" class="btn-change-text">기울임</div></li>
+			<li><div id="underLine" class="btn-change-text">밑</div></li>
+		</ul>
+		<!-- Scripts -->
+			<script src="/js/jquery.min.js"></script>
+			<script src="/js/browser.min.js"></script>
+			<script src="/js/breakpoints.min.js"></script>
+			<script src="/js/util.js"></script>
+			<script src="/js/main.js"></script>
+			<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+			<script th:inline="javascript">
+				$("#editMenu").menu();
+
+				var id = "";
+
+				document.execCommand('styleWithCSS', false, true);
+				document.execCommand('insertBrOnReturn', false, true);
+
+				$(document).ready(function() {
+					$("li").click(function(){
+						let contentId = $(this).parent().attr('id');
+
+						if(contentId == 'fontName' || contentId == 'fontSize'
+							|| contentId == 'foreColor' || contentId == 'hiliteColor'){
+						   document.execCommand(contentId, false, $(this).attr('value'));
+						}
+					})
+					$('.btn-change-text').click(function(){
+						document.execCommand($(this).attr('id'), false, true);
+					});
+
+					$('select').change(function(){
+						document.execCommand($(this).attr('id'), false, $(this).val());
+					});
+
+				});
+
+				// text 입력 창 이외 부분을 클릭했을 때 메뉴 없어지게
+				window.onclick = function(event) {
+					if(!event.target.matches('#text')){
+						let element = document.getElementById("editMenu");
+						//element.style.display = "none";
+					}
+				}
+
+				function getContent(contentId){
+					var insertButton = "<form action='/dashboard' method='get'><button id='btn-update' type='button' style='background-color:mediumseagreen;' onclick='update()'>저장</button><button id='btn-back' type='submit'>Home</button><button id='btn-delete' type='button' style='background-color : #F9350B; color : #FEFEFE' onclick='deleteContent()'>삭제</button></form>"
+					var insertText = "<div><div><input type='text' name='name' id='inputTitle' class='form-control' required='' th:value='${title}' style='width:50%; margin-bottom:5px; float:left;'/></div><div style='float:right;'>"+insertButton+"</div></div><div id='text' contenteditable='true' onclick='mouseUp(event)'></div>";
+					$("#changeUpdatePage").html(insertText);
+
+					let el = document.getElementById("alignButton");
+					el.style.display = "block";
+
+					id = contentId;
+
+					$.ajax({
+							type: 'GET',
+							url: '/content/'+id,
+							dataType: 'text',
+							contentType:'application/json; charset=utf-8'
+						}).done(function(data) {
+							var obj = JSON.parse(data)
+							var content = obj.text;
+							var title = obj.title;
+
+							// 가져온 title, text 넣기
+							var titleObj = $("#inputTitle");
+							titleObj.val(title);
+
+							var textObj = document.getElementById('text');
+							textObj.insertAdjacentHTML('afterbegin', content);
+
+							$("#text").focus();
+						}).fail(function (error) {
+							alert(JSON.stringify(error));
+						});
+
+				};
+
+				// 드래그 한 뒤 메뉴 생기게 하기
+				function mouseUp(event){
+					if (document.getSelection){
+						// 마지막 드래그 위치 가져오기
+						let el = document.getElementById("editMenu");
+
+						// 메뉴
+						if(document.getSelection().toString() == ''){
+							el.style.display = "none";
+						} else{
+							let left = event.pageX;
+							let top = event.pageY;
+
+							el.style.left = left + "px";
+							el.style.top = top + "px";
+							el.style.display = "block";
+							el.style.position = "absolute";
+						}
+					}
+				}
+
+				// 저장 버튼 눌렀을 때 업데이트
+				function update(){
+					var data = {
+						title: $('#inputTitle').val(),
+						text: $('#text').html()
+					};
+					console.log(id);
+					$.ajax({
+						type: 'PUT',
+						url: '/content/'+id,
+						dataType: 'text',
+						contentType:'application/json; charset=utf-8',
+						data: JSON.stringify(data)
+					}).done(function() {
+						alert('글이 저장되었습니다.');
+					}).fail(function (error) {
+						alert(JSON.stringify(error));
+					});
+				}
+
+				// 삭제 버튼 눌렀을 때
+				function deleteContent(){
+					$.ajax({
+						type: 'DELETE',
+						url: '/content/'+id,
+						dataType: 'text',
+						contentType:'application/json; charset=utf-8'
+					}).done(function() {
+						alert('글이 삭제되었습니다.');
+						window.location.href = '/dashboard';
+					}).fail(function (error) {
+						alert(JSON.stringify(error));
+					});
+				}
+
+			</script>
+			<script src="./js/app/index.js"></script>
+	</body>
 </html>
