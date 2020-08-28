@@ -72,6 +72,7 @@ def tesseract_box(img): ## path : img path
     box_list = [] # box 저장소
     # left, right, top, bottom 
     merge_data = [] # 겹치는거 한번에 네모 치게끔하는 것
+    mix_list =[]
 
     val = 0 # 시작부분 저장하게끔하는 변수
     space = 10
@@ -86,15 +87,36 @@ def tesseract_box(img): ## path : img path
             merge_data[-1] = (t[0], right, min(t[2], top), max(t[3], bottom),merge_data[-1][4],d['height'][i])
         else: ## 다를 경우 merge_data에 저장
             merge_data.append((left, right, top, bottom,line,d['height'][i]))
-            
+            mix_list.append(d['height'][i])
+
 
         val += 1
 
+    font_min = min(mix_list) ## min font 사이즈 구하
 
-    for t in merge_data: ## 네모 친 이미지를 box_list에 추가
-        box_list.append((img_cl[t[2]:t[3],t[0]:t[1]], t[4],t[5]))
+    for t in merge_data: ## 네모 친 이미지를 box_list에 추가기
+        wordH = round(10 * t[5] /  font_min)    ## font_min : 10 = t[5] : wordH + 정수
+        box_list.append((img_cl[t[2]:t[3],t[0]:t[1]], t[4],wordH))
+
+
     return box_list
 
+def hilight_box_list(box_list): ##hilighting 기능
+    count =0
+    box_hilight_list = []
+    rgb_info = defaultdict(int)
+    rgb_info_ori = defaultdict(int)
+    for box in box_list:
+        for rgb in box[0]:
+          for r in rgb:
+            rgb_info_ori[tuple(r)] += 1
+            if r[0]+ r[1]+ r[2] >= min([r[0],r[1],r[2]])*3 + 50:
+              rgb_info[tuple(r)] += 1
+              count = 1
+        if count == 1:
+          box_hilight_list.append(box[0],box[1],box[2])
+          count = 0
+    return box_hilight_list
 
 def delete_img(src): ## src : folder path
     for image_file in os.listdir(src):
