@@ -1,6 +1,6 @@
 package com.capella.handnote.Service;
 
-import com.capella.handnote.Domain.ImageString;
+import com.capella.handnote.Domain.Image;
 import com.capella.handnote.Domain.TextInfo;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,9 @@ public class RestTemplateService {
     public RestTemplateService(RestTemplateUtil restTemplateUtil){
         this.restTemplateUtil = restTemplateUtil;
     }
-    public List<TextInfo> ImageToString(String url, ImageString imageString) throws Exception{
-        return restTemplateUtil.SendImage(url, imageString);
+
+    // Image2String 서비
+    public List<TextInfo> ImageToString(String url, Image image) throws Exception{
+        return restTemplateUtil.SendImage(url, image);
     }
 }

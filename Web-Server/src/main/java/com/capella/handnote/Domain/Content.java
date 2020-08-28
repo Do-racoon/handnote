@@ -31,11 +31,11 @@ public class Content {
     public void setUserId(String userId){
         this.userId = userId;
     }
-    public void setText(String title){
-        this.title = title;
-    }
-    public void setTitle(String text){
+    public void setText(String text){
         this.text = text;
+    }
+    public void setTitle(String title){
+        this.title = title;
     }
 
     @Builder

@@ -25,7 +25,7 @@ services:
     build: 
       context: ./Web-Server
       dockerfile: Dockerfile
-    image: web-server
+    image: mses1572/web-server
     depends_on:
     - db
     links:
@@ -42,7 +42,7 @@ services:
     build: 
       context: ./Ai-Server
       dockerfile: Dockerfile
-    image: ai-server
+    image: mses1572/ai-server
     network_mode: "service:spring-server"
 <<<<<<< HEAD
     depends_on:

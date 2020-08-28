@@ -49,9 +49,7 @@ var main = {
                 data: formData
             }).done(function(str) {
                 alert('글로 변환되었습니다.');
-                var convertText = JSON.stringify(str);
-                console.log(convertText);
-                $("#text").text(convertText);
+                $("#text").html(str);
             }).fail(function (error) {
                 alert(JSON.stringify(error));
             });
