@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    container_name: db
+    image: mongo:latest
+    ports:
+    - "27017:27017"
+    volumes:
+    - ./Volume:/Volume
+
+  spring-server:
+    container_name: spring
+    build: 
+      context: ./Web-Server
+      dockerfile: Dockerfile
+    image: mses1572/web-server
+    depends_on:
+    - db
+    links:
+    - db
+    ports:
+    - "8000:8080"
+
+  flask-server:
+    container_name: flask
+    build: 
+      context: ./Ai-Server
+      dockerfile: Dockerfile
+    image: mses1572/ai-server
+    network_mode: "service:spring-server"
+    depends_on:
+    - db
+
