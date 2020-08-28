@@ -2,6 +2,7 @@ package com.capella.handnote.Interface;
 
 import com.capella.handnote.Domain.Content;
 import com.capella.handnote.Domain.User;
+import com.capella.handnote.Interface.dto.ContentSaveRequestDto;
 import com.capella.handnote.Interface.dto.ContentUpdateRequestDto;
 import com.capella.handnote.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.naming.ContextNotEmptyException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Controller
 public class LoginController {
@@ -83,7 +86,7 @@ public class LoginController {
     @GetMapping({"/","/home"})
     public ModelAndView home() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("home");
+        modelAndView.setViewName("index");
         return modelAndView;
     }
 
@@ -91,34 +94,36 @@ public class LoginController {
     @GetMapping("/content")
     public ModelAndView content(){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("content-save");
+        modelAndView.setViewName("content_new_edit");
         return modelAndView;
     }
     // 새글에서 content 저장
     @PostMapping("/content")
-    public ModelAndView saveContent(@RequestBody Content content){
+    public ModelAndView saveContent(@RequestBody ContentSaveRequestDto contentSaveRequestDto){
         ModelAndView modelAndView = new ModelAndView();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(authentication.getName());
+        Content content = new Content(user.getId(), contentSaveRequestDto.getText(), contentSaveRequestDto.getTitle());
 
-        content.setUserId(user.getId());
+//        content.setUserId(user.getId());
         userService.saveContent(content);
         modelAndView.setViewName("dashboard");
         return modelAndView;
     }
     // 기존에 있던 content를 불러와서 편집하기
-    @GetMapping("/content/{id}")
-    public ModelAndView userContent(@PathVariable String id){
-        ModelAndView modelAndView = new ModelAndView();
-        // 저장된 content 가져오기(인자는 id를 통해서)
-        Content content = userService.findContent(id);
-
-        modelAndView.addObject("id", content.getId());
-        modelAndView.addObject("title", content.getTitle());
-        modelAndView.addObject("text", content.getText());
-        modelAndView.setViewName("content-update");
-        return modelAndView;
-    }
+//    @GetMapping("/content/{id}")
+//    public ModelAndView userContent(@PathVariable String id){
+//        ModelAndView modelAndView = new ModelAndView();
+//        // 저장된 content 가져오기(인자는 id를 통해서)
+//        Content content = userService.findContent(id);
+//
+//        System.out.println("what : "+content.getText()+content.getTitle());
+//        modelAndView.addObject("id", content.getId());
+//        modelAndView.addObject("title", content.getTitle());
+//        modelAndView.addObject("text", content.getText());
+//        modelAndView.setViewName("content-update");
+//        return modelAndView;
+//    }
     // content 업데이트
     @PutMapping("/content/{id}")
     public ModelAndView updateContent(@PathVariable String id, @RequestBody ContentUpdateRequestDto contentUpdateRequestDto){

@@ -5,26 +5,29 @@ var main = {
             _this.save();
         });
 
-        $('#btn-update').on('click', function () {
-            _this.update();
-        });
-
-        $('#btn-delete').on('click', function () {
+        $('#delete').on('click', function () {
             _this.delete();
         });
 <<<<<<< HEAD
         $('#btn-convert').on('click', function () {
             _this.convert();
         });
+<<<<<<< HEAD
 =======
 >>>>>>> 78460726eb6d9844439e0eba97cc744eede08c18
+=======
+        $('#getContent').on('click', function(){
+            _this.content();
+        });
+>>>>>>> d700ae6... design all done.
     },
+    // 새로 작성한 글 저
     save : function () {
         var data = {
-            title: $('#inputTitle').val(),
-            text: $('#text').html()
+            "title": $('#inputTitle').val(),
+            "text": $('#text').html()
         };
-
+        console.log(data['text']);
         $.ajax({
             type: 'POST',
             url: '/content',
@@ -38,6 +41,7 @@ var main = {
             alert(JSON.stringify(error));
         });
     },
+<<<<<<< HEAD
     update : function () {
         var data = {
             title: $('#inputTitle').val(),
@@ -57,11 +61,12 @@ var main = {
         });
     },
 <<<<<<< HEAD
+=======
+    // 사진을 글씨로 환 해주는 기능
+>>>>>>> d700ae6... design all done.
     convert : function () {
             var form = $("#form-convert")[0];
             var formData = new FormData(form);
-
-//            formData.append("file", $("#convert")[0].files[0]);
 
             $.ajax({
                 type: 'POST',
@@ -79,17 +84,21 @@ var main = {
                 alert(JSON.stringify(error));
             });
     },
+<<<<<<< HEAD
 =======
 >>>>>>> 78460726eb6d9844439e0eba97cc744eede08c18
     delete : function () {
+=======
+    // 기존의 작성한 글을 가져오는 기능
+    content : function(){
+>>>>>>> d700ae6... design all done.
         $.ajax({
-            type: 'DELETE',
+            type: 'GET',
             url: '/content/'+id,
             dataType: 'text',
             contentType:'application/json; charset=utf-8'
         }).done(function() {
-            alert('글이 삭제되었습니다.');
-            window.location.href = '/dashboard';
+        //
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
