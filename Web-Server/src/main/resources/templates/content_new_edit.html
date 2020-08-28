@@ -1,0 +1,274 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <title>HandNote</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
+    <link rel="stylesheet" href="/css/main.css" />
+    <style>
+    #editText{
+        position: block;
+        float:right;
+    }
+
+    #imageUpload{
+        position: block;
+        float:left;
+        text-align: center;
+    }
+
+    #btn-convert{
+        position: absolute;
+        top: 40%;
+        left:45%;
+    }
+
+    #btn-save{
+        background-color:mediumseagreen;
+    }
+
+    .convertButton2{
+        position: absolute;
+        top: 50%;
+        left: 45%;
+    }
+
+    #editContent{
+        padding : 10px 20px 10px 20px;
+    }
+
+    .filebox {
+        margin-bottom: 5px;
+    }
+
+    .filebox input[type="file"] {
+        position: absolute;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+    }
+
+    .filebox label {
+        display: inline-block;
+        padding: 6px 10px;
+        vertical-align: middle;
+        background-color: #fdfdfd;
+        cursor: pointer;
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+        margin-bottom: 0px;
+    }
+
+    /* named upload */
+    .filebox .upload-name {
+        display: inline-block;
+        color: #999;
+        height: 35px;
+        font-size:0.9em;
+        padding: 0 10px;
+        vertical-align: middle;
+        background-color: #f5f5f5;
+        border: 1px solid #ebebeb;
+        border-radius: 5px;
+    }
+
+
+    </style>
+</head>
+<body class="is-preload">
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Main -->
+    <div id="main">
+        <div class="inner">
+
+            <!-- Header -->
+            <header id="header">
+                <a href="/dashboard" class="logo"><strong>Editorial</strong> by HandNote</a>
+            </header>
+
+            <!-- Banner -->
+            <section id="banner" style="padding-top:20px;">
+                <!--									이부분-->
+                <div class="content" id="editContent">
+                    <form method="post" id="form-convert" enctype="multipart/form-data">
+                        <div id="imageUpload">
+                            <h2 style="margin-bottom: 5px;">이미지 업로드</h2>
+
+                            <div class="filebox">
+                                <label for="convert">파일 업로드</label>
+                                <input id="convert" type="file" name="convert" onchange="setThumbnail(event);">
+                                <input class="upload-name" value="파일선택" readonly />
+                            </div>
+
+                            <div id="imageContainer"></div>
+                        </div>
+                    </form>
+                    <button id="btn-convert" type="button" style="background-color:#f56a6a">텍스트로<br>변환</button>
+                    <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
+                        <button class="convertButton2" style="background-color:#f56a6a">중요부분<br>변환</button>
+                    </form>
+                    <div id="editText">
+                        <div class='actions'>
+                            <button id="justifyLeft" class="button big btn-change-text">왼쪽정렬</button>
+                            <button id="justifyCenter" class="button big btn-change-text" >가운데정렬</button>
+                            <button id="justifyRight" class="button big btn-change-text">오른쪽정렬</button>
+                            <br/>
+                            <br/>
+                        </div>
+                        <input type="text" name="name" id="inputTitle" class="form-control" required=""/>
+                        <div id="text" contenteditable="true" onclick="mouseUp(event)">
+                        </div>
+                        <form action="/dashboard" method="get">
+                            <button id="btn-save" type="button">저장</button>
+                            <button id="btn-back" type="submit">Home</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+    </div>
+
+</div>
+<!--			편집 메뉴-->
+<ul id="editMenu">
+    <li><div>글꼴선택</div>
+        <ul id="fontName" class="dropdown-values">
+            <li value="Courier New"><div>Courier New</div></li>
+            <li value="Verdana"><div>Verdana</div></li>
+            <li value="Times"><div>Times</div></li>
+            <li value="Courier"><div>Courier</div></li>
+            <li value="Copperplate"><div>Copperplate</div></li>
+        </ul>
+    </li>
+    <li><div>글자크기</div>
+        <ul id="fontSize" class="dropdown-values">
+            <li value="1"><div>4px</div></li>
+            <li value="2"><div>8px</div></li>
+            <li value="3"><div>10px</div></li>
+            <li value="4"><div>12px</div></li>
+            <li value="5"><div>16px</div></li>
+            <li value="6"><div>20px</div></li>
+            <li value="7"><div>30px</div></li>
+        </ul>
+    </li>
+    <li><div>글자색깔</div>
+        <ul id="foreColor" class="dropdown-values">
+            <li value="#f00"><div>빨강</div></li>
+            <li value="#00f"><div>파랑</div></li>
+            <li value="#0f0"><div>초록</div></li>
+            <li value="#ffff00"><div>노랑</div></li>
+            <li value="#000"><div>검정</div></li>
+        </ul>
+    </li>
+    <li><div>글자배경색</div>
+        <ul id="hiliteColor" class="dropdown-values">
+            <li value="#f00"><div>빨강</div></li>
+            <li value="#00f"><div>파랑</div></li>
+            <li value="#0f0"><div>초록</div></li>
+            <li value="#ffff00"><div>노랑</div></li>
+            <li value="#000"><div>검정</div></li>
+        </ul>
+    </li>
+    <li><div id="bold" class="btn-change-text">굵게</div></li>
+    <li><div id="italic" class="btn-change-text">기울임</div></li>
+    <li><div id="underLine" class="btn-change-text">밑</div></li>
+</ul>
+<!-- Scripts -->
+<script src="/js/jquery.min.js"></script>
+<script src="/js/browser.min.js"></script>
+<script src="/js/breakpoints.min.js"></script>
+<script src="/js/util.js"></script>
+<script src="/js/main.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script th:inline="javascript">
+    $("#editMenu").menu();
+
+    document.execCommand('styleWithCSS', false, true);
+    document.execCommand('insertBrOnReturn', false, true);
+
+    $(document).ready(function() {
+        $("#text").focus();
+
+        $("li").click(function(){
+            let contentId = $(this).parent().attr('id');
+
+            if(contentId == 'fontName' || contentId == 'fontSize'
+                || contentId == 'foreColor' || contentId == 'hiliteColor'){
+                console.log($(this).attr('value'));
+               document.execCommand(contentId, false, $(this).attr('value'));
+            }
+        })
+
+        $('.btn-change-text').click(function(){
+            console.log(typeof($(this).attr('id')));
+            document.execCommand($(this).attr('id'));
+        });
+
+        $('select').change(function(){
+            document.execCommand($(this).attr('id'), false, $(this).val());
+        });
+
+        var fileTarget = $('#convert');
+          fileTarget.on('change', function(){ // 값이 변경되면
+              var cur=$(".filebox input[type='file']").val();
+            $(".upload-name").val(cur);
+        });
+
+    });
+
+    // 이미지 미리보기
+    function setThumbnail(event) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var img = document.createElement("img");
+            img.setAttribute("src", event.target.result);
+            img.setAttribute("width", "400px");
+            img.setAttribute("height", "300px");
+
+            document.querySelector("#imageContainer").appendChild(img);
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+
+
+    // 드래그 한 뒤 메뉴 생기게 하기
+    function mouseUp(event){
+        if (document.getSelection){
+            // 마지막 드래그 위치 가져오기
+            let el = document.getElementById("editMenu");
+
+            // 메뉴
+            if(document.getSelection().toString() == ''){
+                el.style.display = "none";
+            } else{
+                let left = event.pageX;
+                let top = event.pageY;
+
+                el.style.left = left + "px";
+                el.style.top = top + "px";
+                el.style.display = "block";
+                el.style.position = "absolute";
+            }
+        }
+    }
+</script>
+<script src="./js/app/index.js"></script>
+</body>
+</html>

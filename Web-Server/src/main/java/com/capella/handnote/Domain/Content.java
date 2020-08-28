@@ -32,10 +32,10 @@ public class Content {
         this.userId = userId;
     }
     public void setText(String title){
-        this.text = text;
+        this.title = title;
     }
     public void setTitle(String text){
-        this.title = title;
+        this.text = text;
     }
 
     @Builder
