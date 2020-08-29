@@ -22,7 +22,17 @@
 
 ## Architecture
 
-![handnote_architecture](https://user-images.githubusercontent.com/42924998/91634987-aa50b580-ea2f-11ea-86f0-9bbc8688d503.png)
+### • 서비스 흐름도    
+
+![handnote_architecture](https://user-images.githubusercontent.com/36119144/91645698-24118f00-ea82-11ea-8f14-52ce43a7ca30.png)
+
+### • 이미지 인식 과정
+
+![AI_Flow](https://user-images.githubusercontent.com/36119144/91645283-d21b3a00-ea7e-11ea-8227-a0565573323d.png)  
+
+이미지를 단어별로 인식하여 단어정보가 담긴 데이터로 변환한다.
+
+이 데이터를 CLOVA OCR을 통해 텍스트로 변환하고 줄번호와 글자크기의 정보를 담아 서버에 전송한다.
 
 -----------------------------------
 
