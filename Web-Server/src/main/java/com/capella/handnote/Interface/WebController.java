@@ -24,13 +24,14 @@ public class WebController {
 
     // Form Data - Flask 서버로 전송 ( Image To String )
     @PostMapping("/fileupload")
-    public String fileUpload(@RequestParam("convert") MultipartFile mFile){
+    public String fileUpload(MultipartFile mFile){
         Image image = null;         // 이미지 파일
         List<TextInfo> textInfo = null;     // Request 텍스트 정보
         Integer maxline = 1;                // 최대 라인 수
         String text = "";                   // 출력할 텍스트(HTML)
 
         try{
+            System.out.println(mFile);
             image = new Image(mFile.getOriginalFilename(),mFile);
             // Flask 서버로 요청 - 객체 ( 문자, 글자크기, 라인 )
             textInfo = restTemplateService.ImageToString("http://0.0.0.0:5000/img-string", image);

@@ -12,22 +12,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
     <link rel="stylesheet" href="/css/main.css" />
-    <style>
+    <style type="text/css">
     #editText{
         position: block;
-        float:right;
     }
 
     #imageUpload{
         position: block;
-        float:left;
         text-align: center;
     }
 
     #btn-convert{
         position: absolute;
-        top: 40%;
-        left:45%;
+<!--        top: 40%;-->
+<!--        left:55%;-->
     }
 
     #btn-save{
@@ -36,8 +34,8 @@
 
     .convertButton2{
         position: absolute;
-        top: 50%;
-        left: 45%;
+<!--        top: 50%;-->
+<!--        left: 55%;-->
     }
 
     #editContent{
@@ -46,6 +44,8 @@
 
     .filebox {
         margin-bottom: 5px;
+        top: 30%;
+        left:55%;
     }
 
     .filebox input[type="file"] {
@@ -80,7 +80,51 @@
         border: 1px solid #ebebeb;
         border-radius: 5px;
     }
+    input[type=file] {
+            display: none;
+    }
 
+    .my_button {
+        display: inline-block;
+        width: 90px;
+        text-align: center;
+        padding: 10px;
+        background-color: #006BCC;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 3px;
+        position: absolute;
+<!--        top: 30%;-->
+<!--        left:55.4%;-->
+    }
+
+
+
+    .imgs_wrap {
+        overflow:auto;
+        border: 2px solid #A8A8A8;
+        margin-top: 30px;
+        margin-bottom: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 200px;
+        height: 500px;
+    }
+    .imgs_wrap img {
+        max-width: 150px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .container{
+        display: grid;
+        grid-template-columns: 250px 500px 200px 450px;
+    }
+
+    .container_sub{
+        display: grid;
+        grid-template-rows: 100px 80px 80px 80px;
+    }
 
     </style>
 </head>
@@ -101,33 +145,38 @@
             <!-- Banner -->
             <section id="banner" style="padding-top:20px;">
                 <!--									이부분-->
-                <div class="content" id="editContent">
-                    <form method="post" id="form-convert" enctype="multipart/form-data">
-                        <div id="imageUpload">
-                            <h2 style="margin-bottom: 5px;">이미지 업로드</h2>
-
-                            <div class="filebox">
-                                <label for="convert">파일 업로드</label>
-                                <input id="convert" type="file" name="convert" onchange="setThumbnail(event);">
-                                <input class="upload-name" value="파일선택" readonly />
+                <div class="content container" id="editContent">
+                    <div id="imageUpload" class="item">
+                        <div>
+                            <div class="imgs_wrap">
+                                <img id="img" />
                             </div>
+                        </div>
+                    </div>
+                    <div id="imageContainer" class="item"></div>
+                    <div class="item">
+                        <div class="container_sub">
+                            <div class="item">
+                            </div>
+                            <div class="filebox item">
+                                <form id="form-convert" method="post" enctype="multipart/form-data">
+                                    <a href="javascript:" onclick="fileUploadAction();" class="my_button">파일<br>업로드</a>
+                                    <input id="convert" type="file" name="convert" multiple />
+                                </form>
+                            </div>
+                            <div class="item">
+                                <button id="btn-convert" type="button" style="background-color:#f56a6a; margin:0;">텍스트로<br>변환</button>
+                            </div>
+                            <div class="item">
+                                <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
+                                    <button class="convertButton2" style="background-color:#f56a6a; margin:0;">중요부분<br>변환</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
-                            <div id="imageContainer"></div>
-                        </div>
-                    </form>
-                    <button id="btn-convert" type="button" style="background-color:#f56a6a">텍스트로<br>변환</button>
-                    <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
-                        <button class="convertButton2" style="background-color:#f56a6a">중요부분<br>변환</button>
-                    </form>
-                    <div id="editText">
-                        <div class='actions'>
-                            <button id="justifyLeft" class="button big btn-change-text">왼쪽정렬</button>
-                            <button id="justifyCenter" class="button big btn-change-text" >가운데정렬</button>
-                            <button id="justifyRight" class="button big btn-change-text">오른쪽정렬</button>
-                            <br/>
-                            <br/>
-                        </div>
-                        <input type="text" name="name" id="inputTitle" class="form-control" required=""/>
+                    <div id="editText" class="item">
+                        <input type="text" name="name" id="inputTitle" class="form-control" required="" style="width: 400px"/>
                         <div id="text" contenteditable="true" onclick="mouseUp(event)">
                         </div>
                         <form action="/dashboard" method="get">
@@ -137,7 +186,6 @@
                     </div>
 
                 </div>
-
             </section>
 
 
@@ -200,6 +248,13 @@
 <script th:inline="javascript">
     $("#editMenu").menu();
 
+     // 이미지 정보들을 담을 배열
+    var sel_files = [];
+    var prev_index = null;
+    var sel_index = 0;
+    var textList = [];
+    var titleList = [];
+
     document.execCommand('styleWithCSS', false, true);
     document.execCommand('insertBrOnReturn', false, true);
 
@@ -231,20 +286,85 @@
             $(".upload-name").val(cur);
         });
 
+        $('#convert').on("change", handleImgFileSelect);
     });
 
-    // 이미지 미리보기
-    function setThumbnail(event) {
-        var reader = new FileReader();
-        reader.onload = function(event) {
-            var img = document.createElement("img");
-            img.setAttribute("src", event.target.result);
-            img.setAttribute("width", "400px");
-            img.setAttribute("height", "300px");
+    function fileUploadAction(){
+        $("#convert").trigger('click');
+    }
+    function handleImgFileSelect(e) {
+            // 이미지 정보들을 초기화
+            sel_files = [];
+            $(".imgs_wrap").empty();
 
-            document.querySelector("#imageContainer").appendChild(img);
-        };
-        reader.readAsDataURL(event.target.files[0]);
+            var files = e.target.files;
+            var filesArr = Array.prototype.slice.call(files);
+
+            var index = 0;
+            filesArr.forEach(function(f) {
+                if(!f.type.match("image.*")) {
+                    alert("확장자는 이미지 확장자만 가능합니다.");
+                    return;
+                }
+
+                sel_files.push(f);
+
+                var reader = new FileReader();
+
+                //onclick=\"deleteImageAction("+index+")\"
+
+                reader.onload = function(e) {
+
+                    var html = "<a href=\"javascript:void(0);\" onclick=\"setThumbnail("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" id=\"Img_id_"+index+"\" data-file='"+f.name+"' class='selProductFile' title='Click to Select'></a>";
+                    $(".imgs_wrap").append(html);
+                    index++;
+
+                }
+                reader.readAsDataURL(f);
+
+            });
+    }
+    function deleteImageAction(index) {
+        console.log("index : "+index);
+        console.log("sel length : "+sel_files.length);
+
+        sel_files.splice(index, 1);
+
+        // 그 전의 썸네일 테두리를 제거
+        prev_index = null;
+
+        var img_id = "#img_id_"+index;
+        $(img_id).remove();
+    }
+    // 이미지 미리보기
+    function setThumbnail(index) {
+        // 전의 선택된 썸네일이 존재할 경우
+        if(prev_index != null){
+            let prev_obj = document.getElementById("Img_id_"+prev_index);
+            prev_obj.style.border = "";
+        }
+        $("#imageContainer > img").remove();
+
+        var obj = document.getElementById("Img_id_"+index)
+        obj.style.border = "3px solid green";
+
+        // 현재 선택된 썸네일 번호 저장
+        prev_index = index;
+        sel_index = index;
+
+        var src = obj.src
+
+        // text 넣기
+        $("#text").html(textList[index]);
+        $("#inputTitle").val(titleList[index]);
+
+        // 썸네일의 정보를 대입 / 출력
+        var img = document.createElement("img");
+        img.setAttribute("src", src);
+        img.setAttribute("width", "400px");
+        img.setAttribute("height", "500px");
+
+        document.querySelector("#imageContainer").appendChild(img);
     }
 
 
