@@ -46,8 +46,7 @@ def demo(model, converter, opt):
 
             # select max probabilty (greedy decoding) then decode index to character
             _, preds_index = preds.max(2)
-#             for i in preds_index:
-#                 print(i)
+
             preds_str = converter.decode(preds_index, length_for_pred)
             preds_prob = F.softmax(preds, dim=2)
             preds_max_prob, _ = preds_prob.max(dim=2)
@@ -60,16 +59,23 @@ def demo(model, converter, opt):
                 # calculate confidence score (= multiply of pred_max_prob)
                 confidence_score = pred_max_prob.cumprod(dim=0)[-1]
                 i_test_list.append([pred+ " ", wordH, line])
+
     return i_test_list
 
 
-def image_file(src):
-    global opt, model, converter
-    img_list = detect.tesseract_box(src)
-    opt.img_data= img_list
 
+def image_file(src, highlight):
+  global opt, model, converter
 
-    return demo(model, converter, opt)
+  img_list = detect.tesseract_box(src, highlight)
+
+  if highlight:
+    img_list = detect.highlight_box_list(img_list)
+
+  opt.img_data = img_list
+
+  return demo(model, converter, opt)
+
 
 opt = easydict.EasyDict({'FeatureExtraction': "ResNet",
        'PAD': False,

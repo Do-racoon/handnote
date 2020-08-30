@@ -168,9 +168,7 @@
                                 <button id="btn-convert" type="button" style="background-color:#f56a6a; margin:0;">텍스트로<br>변환</button>
                             </div>
                             <div class="item">
-                                <form action="http://localhost/upload.php" method="post" enctype="multipart/form-data">
-                                    <button class="convertButton2" style="background-color:#f56a6a; margin:0;">중요부분<br>변환</button>
-                                </form>
+                                <button class="convertButton2" type="button" id="btn-hl-convert" style="background-color:#f56a6a; margin:0;">중요부분<br>변환</button>
                             </div>
                         </div>
                     </div>
@@ -255,6 +253,9 @@
     var textList = [];
     var titleList = [];
 
+    // 변환 후 구분하기 위해
+    var after_convert = 0;
+
     document.execCommand('styleWithCSS', false, true);
     document.execCommand('insertBrOnReturn', false, true);
 
@@ -295,6 +296,14 @@
     function handleImgFileSelect(e) {
             // 이미지 정보들을 초기화
             sel_files = [];
+            textList = [];
+            titleList = [];
+
+            after_convert = 0;
+
+            $("#text").empty();
+            $("#inputTitle").val("");
+
             $(".imgs_wrap").empty();
 
             var files = e.target.files;
@@ -341,7 +350,12 @@
         // 전의 선택된 썸네일이 존재할 경우
         if(prev_index != null){
             let prev_obj = document.getElementById("Img_id_"+prev_index);
-            prev_obj.style.border = "";
+            console.log(prev_obj.style.border);
+            if(after_convert == 1){ // 변환 후
+                prev_obj.style.border = "3px solid blue";
+            } else{ // 변환 전
+                prev_obj.style.border = "";
+            }
         }
         $("#imageContainer > img").remove();
 
