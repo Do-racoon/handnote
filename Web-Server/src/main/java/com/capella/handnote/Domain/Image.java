@@ -10,8 +10,12 @@ import java.io.Serializable;
 @Data
 public class Image implements Serializable {
     private MultipartFile img;
+    private Integer highlight;
+    private Integer index;
 
-    public Image(String img_name, MultipartFile img){
+    public Image(MultipartFile img, Integer index, Integer highlight){
         this.img = img;
+        this.index = index;
+        this.highlight = highlight;
     }
 }
