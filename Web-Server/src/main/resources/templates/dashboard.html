@@ -323,7 +323,7 @@
 
 				function getContent(contentId){
 					var insertButton = "<form action='/dashboard' method='get'><button id='btn-update' type='button' style='background-color:mediumseagreen;' onclick='update()'>저장</button><button id='btn-back' type='submit'>Home</button><button id='btn-delete' type='button' style='background-color : #F9350B; color : #FEFEFE' onclick='deleteContent()'>삭제</button></form>"
-					var insertText = "<div><div><input type='text' name='name' id='inputTitle' class='form-control' required='' th:value='${title}' style='width:50%; margin-bottom:5px; float:left;'/></div><div style='float:right;'>"+insertButton+"</div></div><div id='text' contenteditable='true' onclick='mouseUp(event)'></div>";
+					var insertText = "<div><div><input type='text' name='name' id='inputTitle' class='form-control' required='' th:value='${title}' style='width:50%; margin-bottom:5px; float:left;'/></div><div style='float:right;'>"+insertButton+"</div></div><div id='text' contenteditable='true' onclick='mouseUp(event)' style='width: 50%'></div>";
 					$("#changeUpdatePage").html(insertText);
 
 					let el = document.getElementById("alignButton");
