@@ -4,11 +4,22 @@ import pytesseract
 import os
 from pytesseract import Output
 from collections import defaultdict
+import numpy as np
 
 # tessercat box 치는 작업
 def tesseract_box(img): ## path : img path
     img_cl = copy.copy(img)
-    d = pytesseract.image_to_data(img_cl,output_type=Output.DICT)
+    img_cp = copy.copy(img)
+    img_hsv = cv2.cvtColor(img_cl, cv2.COLOR_BGR2HSV)
+    img_yellow = cv2.inRange(img_hsv, np.array([25,120,120]),np.array([32,255,255]))
+    img_pink = cv2.inRange(img_hsv, np.array([144,50,50]), np.array([184, 235, 255]))
+    img_green = cv2.inRange(img_hsv,  np.array([40,50,50]),np.array([79, 255, 252]))
+    img_result = cv2.bitwise_not(img_cp, img_cp, mask = img_yellow)
+    img_result = cv2.bitwise_not(img_cp, img_cp, mask = img_pink)
+    img_result = cv2.bitwise_not(img_cp, img_cp, mask = img_green)
+    img_result_white = cv2.bitwise_or(img_result, img_cl)
+
+    d = pytesseract.image_to_data(img_result_white,output_type=Output.DICT)
     ## dict_keys(['level', 'page_num', 'block_num', 'par_num', 'line_num', 'word_num', 'left', 'top', 'width', 'height', 'conf', 'text'])
     value_dict = list(d.values())
     # d 에 저장
@@ -110,7 +121,7 @@ def hilight_box_list(box_list): ##hilighting 기능
         for rgb in box[0]:
           for r in rgb:
             rgb_info_ori[tuple(r)] += 1
-            if r[0]+ r[1]+ r[2] >= min([r[0],r[1],r[2]])*3 + 50:
+            if r[0]+ r[1]+ r[2] >= min([r[0],r[1],r[2]])*3 + 20:
               rgb_info[tuple(r)] += 1
               count = 1
         if count == 1:
