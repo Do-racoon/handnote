@@ -40,15 +40,13 @@ var main = {
            // 텍스트 비우기
            $("#text").empty();
            $("#inputTitle").val("");
-            //window.location.href = '/dashboard';
+
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });
     },
     // 사진을 글씨로 환 해주는 기능
     convert : function (highlight) {
-//            var form = $("#form-convert")[0];
-//            var form = new FormData($("#form-convert")[0]);
             var fileList = $("#convert")[0].files;
 
 
@@ -75,8 +73,6 @@ var main = {
                     contentType: false,
                     data: data
                 }).done(function(str) {
-                    //alert('글로 변환되었습니다.');
-                    //$("#text").html(str);
                     // 인덱스와 text로 나누기 위한 것
                     str_split = str.split("@",2);
                     // 첫번째 인자가 인덱스
@@ -96,9 +92,6 @@ var main = {
                 });
 
             }
-
-
-
     },
     // 기존의 작성한 글을 가져오는 기능
     content : function(){
