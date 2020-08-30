@@ -49,7 +49,6 @@ var main = {
     convert : function (highlight) {
 //            var form = $("#form-convert")[0];
 //            var form = new FormData($("#form-convert")[0]);
-            console.log($(this)[0])
             var fileList = $("#convert")[0].files;
 
 
@@ -63,7 +62,6 @@ var main = {
                 // 파일 이름 저장
                 titleList.push(fileList[i].name.split(".", 1));
                 textList.push("");
-                console.log(fileList[i].name.split(".", 1));
 
                 //data.append("image_count", 1);
                 let obj = document.getElementById("Img_id_"+i);
@@ -79,7 +77,6 @@ var main = {
                 }).done(function(str) {
                     //alert('글로 변환되었습니다.');
                     //$("#text").html(str);
-                    console.log("ok");
                     // 인덱스와 text로 나누기 위한 것
                     str_split = str.split("@",2);
                     // 첫번째 인자가 인덱스
