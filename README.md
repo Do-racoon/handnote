@@ -34,6 +34,13 @@
 
 이 데이터를 CLOVA OCR을 통해 텍스트로 변환하고 줄번호와 글자크기의 정보를 담아 서버에 전송한다.
 
+
+
+### • 하이라이트 부분 추출 과정
+
+![hilight](https://user-images.githubusercontent.com/42924998/91671259-2ba76580-eb60-11ea-9092-dff144f6b30f.png)
+
+
 -----------------------------------
 
 ## 구현 화면
@@ -46,11 +53,19 @@
 ▶  New Edit 버튼을 클릭하여 새로운 노트를 작성 ( 텍스트로 바꿀 이미지 필수)  
 
 
+![스크린샷, 2020-08-31 08-04-10](https://user-images.githubusercontent.com/42924998/91671410-5fcf5600-eb61-11ea-8353-60a50d3aedd5.png)
 
-![new edit](https://user-images.githubusercontent.com/42924998/91634958-81302500-ea2f-11ea-899a-39c4e53210a8.png)
 ▶  파입 업로드로 인식할 사진을 선택하고, **[텍스트로 변환]** 혹은 **[중요부분 변환]** 버튼을 누르면 인식한 글씨가 텍스트창에 들어가게 됌.  
 
+![스크린샷, 2020-08-31 08-04-55](https://user-images.githubusercontent.com/42924998/91671439-ac1a9600-eb61-11ea-96de-891fa2399b6f.png)
+
+빨강색 테두리 - 변환 중  |   파랑색 테두리 - 변환 완료    |   초록색 테두리 - 선택한 이미지(Preview)
+
+![스크린샷, 2020-08-31 08-06-41](https://user-images.githubusercontent.com/42924998/91671419-7d9cbb00-eb61-11ea-9a96-8409ff9d6e2e.png)
+
 **[텍스트로 변환]** - 이미지의 모든 글씨 인식
+
+![스크린샷, 2020-08-31 08-08-14](https://user-images.githubusercontent.com/42924998/91671428-94dba880-eb61-11ea-82d3-21bf079aca48.png)
 
 **[중요부분 변환]** - 이미지의 하이라이트한 글씨만 인식  
   
