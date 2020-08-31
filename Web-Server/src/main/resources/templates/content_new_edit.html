@@ -309,6 +309,8 @@
             var files = e.target.files;
             var filesArr = Array.prototype.slice.call(files);
 
+            prev_index = null;
+
             var index = 0;
             filesArr.forEach(function(f) {
                 if(!f.type.match("image.*")) {
