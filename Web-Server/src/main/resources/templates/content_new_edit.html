@@ -233,7 +233,7 @@
     </li>
     <li><div id="bold" class="btn-change-text">굵게</div></li>
     <li><div id="italic" class="btn-change-text">기울임</div></li>
-    <li><div id="underLine" class="btn-change-text">밑</div></li>
+    <li><div id="underLine" class="btn-change-text">밑줄</div></li>
 </ul>
 <!-- Scripts -->
 <script src="/js/jquery.min.js"></script>
@@ -267,13 +267,11 @@
 
             if(contentId == 'fontName' || contentId == 'fontSize'
                 || contentId == 'foreColor' || contentId == 'hiliteColor'){
-                console.log($(this).attr('value'));
                document.execCommand(contentId, false, $(this).attr('value'));
             }
         })
 
         $('.btn-change-text').click(function(){
-            console.log(typeof($(this).attr('id')));
             document.execCommand($(this).attr('id'));
         });
 
@@ -318,27 +316,22 @@
                     return;
                 }
 
-                sel_files.push(f);
-
                 var reader = new FileReader();
 
                 //onclick=\"deleteImageAction("+index+")\"
 
                 reader.onload = function(e) {
+                    sel_files.push(f);
 
                     var html = "<a href=\"javascript:void(0);\" onclick=\"setThumbnail("+index+")\" id=\"img_id_"+index+"\"><img src=\"" + e.target.result + "\" id=\"Img_id_"+index+"\" data-file='"+f.name+"' class='selProductFile' title='Click to Select'></a>";
                     $(".imgs_wrap").append(html);
-                    index++;
 
+                    index++;
                 }
                 reader.readAsDataURL(f);
-
             });
     }
     function deleteImageAction(index) {
-        console.log("index : "+index);
-        console.log("sel length : "+sel_files.length);
-
         sel_files.splice(index, 1);
 
         // 그 전의 썸네일 테두리를 제거
@@ -348,11 +341,11 @@
         $(img_id).remove();
     }
     // 이미지 미리보기
-    function setThumbnail(index) {
+    function setThumbnail(num) {
         // 전의 선택된 썸네일이 존재할 경우
         if(prev_index != null){
             let prev_obj = document.getElementById("Img_id_"+prev_index);
-            console.log(prev_obj.style.border);
+
             if(after_convert == 1){ // 변환 후
                 prev_obj.style.border = "3px solid blue";
             } else{ // 변환 전
@@ -361,18 +354,18 @@
         }
         $("#imageContainer > img").remove();
 
-        var obj = document.getElementById("Img_id_"+index)
+        var obj = document.getElementById("Img_id_"+num)
         obj.style.border = "3px solid green";
 
         // 현재 선택된 썸네일 번호 저장
-        prev_index = index;
-        sel_index = index;
+        prev_index = num;
+        sel_index = num;
 
         var src = obj.src
 
         // text 넣기
-        $("#text").html(textList[index]);
-        $("#inputTitle").val(titleList[index]);
+        $("#text").html(textList[num]);
+        $("#inputTitle").val(titleList[num]);
 
         // 썸네일의 정보를 대입 / 출력
         var img = document.createElement("img");

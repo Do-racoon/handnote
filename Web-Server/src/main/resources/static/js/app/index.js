@@ -50,10 +50,10 @@ var main = {
             var fileList = $("#convert")[0].files;
 
 
-             for(var i=0, len=fileList.length; i<len; i++) {
+             for(var i=0, len=sel_files.length; i<len; i++) {
                 var data = new FormData();
                    //sel_files[i]
-                data.append("mFile", fileList[i]);
+                data.append("mFile", sel_files[i]);
                 data.append("index", i)
                 data.append("highlight", highlight);
 
@@ -77,6 +77,7 @@ var main = {
                     str_split = str.split("@",2);
                     // 첫번째 인자가 인덱스
                     var idx = parseInt(str_split[0]);
+
                     // 두번째 인자가 text
                     str = str_split[1];
 
